@@ -15,14 +15,15 @@ class MyControllerTest {
   //MOCK DEPENDENCY CLASS
   @Mock PersonRepository personRepository;
 
-  //INSTANTIATE CLASS BEING TESTED. INJECT MOCKS (WHERE @AUTOWIRED IS USED)
-  @InjectMocks MyController myController;
-
   @Test
   void getPerson() {
 
     //MOCK REPOSITORY'S METHOD: getPersonById(1)
     when(personRepository.getPersonById(1)).thenReturn(new Person(1, "Susan", 50));
+
+    //INSTANTIATE CONTROLLER. SET PROPERTY TO MOCKED INSTANCE.
+    MyController myController = new MyController();
+                 myController.personRepository = personRepository;
 
     //TEST CONTROLLER'S ENDPOINT
     String result = myController.getPerson(1);
